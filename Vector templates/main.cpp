@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-template <typename Type> class CVector {
+template <typename Type> 
+class CVector {
 private:
   Type *m_pVect;        // Pointer to the buffer
   int m_nCount,         // Control how many elements are actually used
@@ -15,6 +16,13 @@ public:
 };
 
 // Class CVector implementation
+template <typename Type> 
+void CVector<Type>::Resize() {
+  this->m_pVect = (Type *)realloc(this->m_pVect, sizeof(int) * (this->m_nMax + this->m_nDelta));
+  // The Max has to be increased by delta
+  this->m_nMax += this->m_nDelta;
+}
+
 template <typename Type> CVector<Type>::CVector(int delta) { Init(delta); }
 template <typename Type> void CVector<Type>::Insert(Type &elem) {
   if (m_nCount == m_nMax)     // Verify the overflow
